@@ -11,7 +11,8 @@ const server = http.createServer((req, res) => {
 
   fs.appendFile("log.txt", log, (err, data) => {
     switch (myUrl.pathname) {
-      case "/": res.end("Homepage")
+      case "/":
+        if (req.method === "GET") res.end("Homepage")
         break;
       case "/about":
         const qp = myUrl.query.myname
@@ -20,6 +21,13 @@ const server = http.createServer((req, res) => {
       case "/search":
         const search = myUrl.query.search_query
         res.end(`Here are your result for ${search}`)
+        break;
+      case "/signup":
+        if (req.method === "GET") res.end("This is signup Form");
+        else if (req.method === "POST") {
+          //DB query
+          res.end("Success")
+        }
         break;
       default: res.end("404 Not Found")
     }
