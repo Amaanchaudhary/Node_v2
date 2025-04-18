@@ -1,11 +1,15 @@
 REST API
 
-GET /users - List all users
-GET /users/1 - Get the user with id 1
-GET /users/2 - Get the user with id 2
 
-POST /users - Create new User
+GET /users - return Html SSR       -- Done
+GET /api/users - List all users    -- Done
 
-PATCH  /users/1 - Edit the user with ID 1
+Route => /api/users/:id   -- Dynamic Path - id can be anything passed in URL
+GET /api/users/1 - Get the user with id 1       -- Done
+GET /api/users/2 - Get the user with id 2       -- Done
 
-DELETE  /users/1 - delete the user with ID 1
+POST /api/users - Create new User
+
+PATCH  /api/users/1 - Edit the user with ID 1
+
+DELETE  /api/users/1 - delete the user with ID 1
