@@ -1,9 +1,38 @@
 import express from 'express'
 import users from './MOCK_DATA.json' with {type: 'json'};
 import fs from 'fs';
+import mongoose from 'mongoose';
+import { type } from 'os';
 
 const app = express()
 const port = 8000
+
+// Connection
+mongoose.connect("mongodb://127.0.0.1:27017/UserDoc").then(() => console.log("DB connected")
+)
+
+// Schema
+const userSchema = mongoose.Schema({
+  firstName : {
+    type : String,
+    required : true,
+  },
+  lastName : {
+    type : String,
+  },
+  email : {
+    type : String,
+    required : true,
+    unique : true
+  },
+  gender : {
+    type : String,
+    enum: ['male', 'female', 'other'], // Allowed values
+  }
+})
+
+//model
+const user = mongoose.model("User", userSchema)
 
 // Middleware - builtIn - plugins 
 app.use(express.urlencoded({ extended: false })) // this will call the next in the stack after processing the request. in these case logs middleware is next if its not then routes 

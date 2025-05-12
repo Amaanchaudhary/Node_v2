@@ -13,3 +13,26 @@ POST /api/users - Create new User
 PATCH  /api/users/1 - Edit the user with ID 1
 
 DELETE  /api/users/1 - delete the user with ID 1
+
+//How to connect MongoDB with Node
+1. npm i mongoose // it helps to interact with mongoDB with our node App.
+2. Import mongoose from mongoose.
+3. create schema, // define Structure of our Collection's documents 
+ const userSchema = mongoose.schema({})
+4. create model // name of our collection 
+  const user = mongoose.model("<name of collection>", userSchema); // pass actual schema and name or our collection.
+5. Connect.
+  mongoose.connect("<DB url>/<name of DB as per choice>"); 
+  //when we start our local mongoDB server "mongosh" we get local url like this 
+  //"mongodb://127.0.0.1:27017" which we can use to connect. 
+  for Eg:-
+  mongoose.connect("mongodb://127.0.0.1:27017/UserDoc")
+  .then(() => console.log("DB connected")) 
+  // this console should show in our terminal after starting server means DB connected.
+
+6. Now go to cmd
+6.1 "mongosh" to start server.
+6.2 "show dbs" our DB name should reflect in the list "UserDoc".
+6.3 "user UserDoc" to use it 
+6.4 "show collections" our collection/model eg:- "users" name should reflect there.
+6.5 db.users.find({}) // empty because we didnot inserted any thing yet.
