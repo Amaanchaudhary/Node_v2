@@ -43,13 +43,19 @@ app.use(express.urlencoded({ extended: false })); // this will call the next in 
 
 // Middleware - custom - here i made the middleware for logs
 app.use((req, res, next) => {
+
+  const now = new Date().toLocaleString(); // Converts to readable format like '5/14/2025, 10:30:15 AM'
+  const log = `\n[${now}] ${req.ip} ${req.method} ${req.path}`;
+
   fs.appendFile(
     "./logs.txt",
-    `\n${Date.now()}: ${req.ip}: ${req.method}: ${req.path}`,
+    log,
     (err) => {
+      if(err){
+        console.log("error writing log file", err);
+      }
       next(); //here there is no other middleware so next is routes
-    }
-  );
+    })
 });
 
 //Routes
@@ -60,8 +66,8 @@ app.get("/users", async (req, res) => {
     const html = `
     <ul>
     ${allDbUsers
-      .map((user) => `<li>${user.first_name} - ${user.email}</li>`)
-      .join("")}
+        .map((user) => `<li>${user.first_name} - ${user.email}</li>`)
+        .join("")}
     </ul>
   `;
     res.send(html);
